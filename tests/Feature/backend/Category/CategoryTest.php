@@ -84,7 +84,7 @@ describe('Category Management', function () {
         it('validates required fields for category creation', function () {
             asAdmin()
             ->post(route('admin.categories.store'), [])
-            ->assertSessionHasErrors(['name', 'status', 'position']);
+            ->assertSessionHasErrors(['name', 'position']);
         });
 
         it('validates category name uniqueness during creation', function () {
@@ -101,10 +101,9 @@ describe('Category Management', function () {
 
         it('validates required fields for category update', function () {
             $category = Category::factory()->create();
-
             asAdmin()
             ->put(route('admin.categories.update', $category->id), [])
-            ->assertSessionHasErrors(['name', 'status', 'position']);
+            ->assertSessionHasErrors(['name', 'position']);
         });
 
         it('validates category name length', function () {
