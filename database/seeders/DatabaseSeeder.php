@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enum\UserTypeEnum;
+use App\Models\Category;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,13 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'user_type' => UserTypeEnum::ADMIN->value,
             'password' => bcrypt(1)
         ]);
+        
+        Category::factory(5)->create();
+
     }
 }

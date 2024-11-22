@@ -15,41 +15,36 @@ describe('Admin Login', function () {
     });
 
     describe('Authentication', function () {
-        beforeEach(function () {
-            $this->user = User::factory()->create([
+
+        it('redirects to the dashboard if admin logs in successfully', function () {
+            $user = User::factory()->create([
                 'password' => bcrypt('123'),
                 'user_type' => UserTypeEnum::ADMIN->value,
             ]);
-            $this->regularUser = User::factory()->create([
-                'user_type' => UserTypeEnum::REGULAR_USER->value,
-            ]);
-        });
-
-        it('redirects to the dashboard if admin logs in successfully', function () {
             post(route('admin.login'), [
-                'email' => $this->user->email,
+                'email' => $user->email,
                 'password' => '123',
             ])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('admin.dashboard'));
-            assertAuthenticatedAs($this->user);
+            assertAuthenticatedAs($user);
         });
 
-        it('cannot access the login page if admin is authenticated', function () use ($user) {
-            actingAs($this->user)
+        it('cannot access the login page if admin is authenticated', function () {
+            asAdmin()
                 ->get(route('admin.showLoginPage'))
                 ->assertRedirect('/');
         });
 
         it('restricts access to the dashboard for regular users', function () {
-            actingAs($this->regularUser)
-            ->get(route('admin.dashboard'))
-            ->assertRedirect('/')
-            ->assertSessionHas('error', 'Access denied. Admins only.');
+            asUser()
+                ->get(route('admin.dashboard'))
+                ->assertRedirect('/')
+                ->assertSessionHas('error', 'Access denied. Admins only.');
         });
 
         describe('Validation', function () {
-          
+
             it('fails without filling credentials', function () {
                 post(route('admin.login'))
                     ->assertStatus(Response::HTTP_FOUND)

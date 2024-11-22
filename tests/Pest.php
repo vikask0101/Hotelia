@@ -1,5 +1,9 @@
 <?php
 
+use App\Enum\UserTypeEnum;
+use App\Models\User;
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -41,7 +45,22 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function asAdmin(): TestCase
 {
-    // ..
+    $user = User::factory()->create([
+        'password' => bcrypt('1'),
+        'user_type' => UserTypeEnum::ADMIN->value
+    ]);
+
+    return test()->actingAs($user);
+}
+
+function asUser(): TestCase
+{
+    $user = User::factory()->create([
+        'password' => bcrypt('1'),
+        'user_type' => UserTypeEnum::REGULAR_USER->value
+    ]);
+
+    return test()->actingAs($user);
 }

@@ -26,11 +26,22 @@
             <div class="row border-bottom">
                 <x-backend.navbar />
             </div>
-
+            {{-- Only show when admin access dashboard --}}
+            @if (Route::currentRouteName() === 'admin.dashboard')
             <div class="wrapper wrapper-content">
                 {{ $slot }}
             </div>
-
+            @else
+            {{-- For other routes --}}
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>{{ $pageHeading }}</h2>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                {{ $slot }}
+            </div>
+            @endif
             <x-backend.footer />
         </div>
     </div>
