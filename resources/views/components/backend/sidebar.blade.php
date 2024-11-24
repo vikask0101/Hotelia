@@ -34,7 +34,7 @@
                 <ul class="nav nav-second-level collapse {{ request()->routeIs('admin.rooms.*') ? 'in' : '' }}">
                     {{-- <li class="{{ request()->routeIs('admin.rooms.setting') ? 'active' : '' }}"><a href="{{ route('admin.rooms.setting') }}">Setting</a></li> --}}
                     {{-- <li class="{{ request()->routeIs('admin.rooms.coupon') ? 'active' : '' }}"><a href="{{ route('admin.rooms.coupon') }}">Coupon</a></li> --}}
-                    {{-- <li class="{{ request()->routeIs('admin.rooms.amenities') ? 'active' : '' }}"><a href="{{ route('admin.rooms.amenities') }}">Amenities</a></li> --}}
+                    <li class="{{ request()->routeIs('admin.rooms.amenities.index') ? 'active' : '' }}"><a href="{{ route('admin.rooms.amenities.index') }}">Amenities</a></li>
                     {{-- <li class="{{ request()->routeIs('admin.rooms.index') ? 'active' : '' }}"><a href="{{ route('admin.rooms.index') }}">Rooms</a></li> --}}
                 </ul>
             </li>

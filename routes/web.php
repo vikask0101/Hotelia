@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Auth\LoginController;
 use App\Http\Controllers\Backend\Category\CategoryController;
 use App\Http\Controllers\Backend\Dashboard\DashboardController;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Backend\Rooms\Amenities\AmenityController;
 
 Route::prefix('admin')->as('admin.')->group(function () {
     // Login Routes
@@ -25,6 +25,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         // Room Routes
         Route::prefix('rooms')->as('rooms.')->group(function () {
+            Route::put('/amenities/{amenity}/status', [AmenityController::class, 'updateStatus'])
+                ->name('amenities.update.status');
+            Route::resource('amenities', AmenityController::class);
 
         });
     });
